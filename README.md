@@ -36,9 +36,8 @@ In this event, re-running the script should resolve this issue and install the p
 
 In VirtualBox on the "controller" node, select _settings_ and go to the _networking_ settings, and on the first network adapter settings open _port forwarding_. Forward some memorble port from the host address 127.0.0.1 to port 80 on the guest. At this point you should be able to access Horizon by the URL http://localhost:<memorable port>/dashboard.
 
-## NOTE: 
-# the following hasn't been tested but probably works to create the objects.
-# There are no cretions of provider router:external networks in the following
+### NOTE: 
+#### The following hasn't been tested but probably works to create the objects. There are no cretions of provider router:external networks in the following
 
 ### Cloud Admin - Create Projects (dev,tst,ops)
 
