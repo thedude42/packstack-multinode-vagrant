@@ -6,16 +6,13 @@ sudo yum install -y sshpass
 
 ssh-keygen -t rsa -N '' -f /home/vagrant/.ssh/id_rsa
 
-sshpass -p 'vagrant' ssh -o StrictHostKeyChecking=no 'root@10.10.10.10' date
-sshpass -p 'vagrant' ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub 'root@10.10.10.10'
-sshpass -p 'vagrant' ssh -o StrictHostKeyChecking=no 'root@10.10.10.20' date
-sshpass -p 'vagrant' ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub 'root@10.10.10.20'
-sshpass -p 'vagrant' ssh -o StrictHostKeyChecking=no 'root@10.10.10.101' date
-sshpass -p 'vagrant' ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub 'root@10.10.10.101'
-sshpass -p 'vagrant' ssh -o StrictHostKeyChecking=no 'root@10.10.10.102' date
-sshpass -p 'vagrant' ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub 'root@10.10.10.102'
-sshpass -p 'vagrant' ssh -o StrictHostKeyChecking=no 'root@10.10.10.103' date
-sshpass -p 'vagrant' ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub 'root@10.10.10.103'
+SSH_DEST_PREFIX="root@10.118.118."
+for octet in "10" "20" "101" "102" "103"
+do
+    sshpass -p 'vagrant' ssh -o StrictHostKeyChecking=no "${SSH_DEST_PREFIX}${octet}" date
+    sshpass -p 'vagrant' ssh-copy-id -i /home/vagrant/.ssh/id_rsa.pub "${SSH_DEST_PREFIX}${octet}"
+    ssh -o StrictHostKeyChecking=no ${SSH_DEST_PREFIX}${octet} "sudo yum install  -y openstack-packstack"
+    ssh -o StrictHostKeyChecking=no ${SSH_DEST_PREFIX}${octet} "yum install -y centos-release-openstack-liberty"
+done
 
-sudo yum install -q -y http://rdo.fedorapeople.org/rdo-release.rpm
-sudo yum install -q -y openstack-packstack
+#sudo yum install -q -y openstack-packstack
